@@ -8,16 +8,24 @@ module.exports = {
         autoIncrement: true,
       },
       home_team: {
-        type: Sequelize.STRING,
+        type: Sequelize.INTEGER,
         allowNull: false,
+        references: {
+          model: 'teams',
+          key: 'id',
+        }
       },
       home_team_goals: {
         type: Sequelize.INTEGER,
         allowNull: false,
       },
       away_team: {
-        type: Sequelize.STRING,
+        type: Sequelize.INTEGER,
         allowNull: false,
+        references: {
+          model: 'teams',
+          key: 'id',
+        }
       },
       away_team_goals: {
         type: Sequelize.INTEGER,
