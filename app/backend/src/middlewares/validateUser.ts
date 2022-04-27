@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
-import { IUserValidate } from '../interfaces/user';
+import { IUserInfo } from '../interfaces/user';
 
 export default class ValidateUser {
   public static async validateUser(
@@ -7,7 +7,7 @@ export default class ValidateUser {
     res: Response,
     next: NextFunction,
   ): Promise<void | Response> {
-    const { email, password } = req.body as IUserValidate;
+    const { email, password } = req.body as IUserInfo;
     const regexEmail = /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/g;
 
     if (!email || !password) {
