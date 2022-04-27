@@ -1,3 +1,5 @@
+import { Request, Response, NextFunction } from 'express';
+
 export interface IUser {
   id?: number;
   username: string;
@@ -17,4 +19,8 @@ export interface ILoginResponse {
 
 export interface ILoginService {
   login(userData: IUserInfo): Promise<ILoginResponse | boolean>;
+}
+
+export interface IUserController {
+  loginController(req: Request, res: Response, next: NextFunction): Promise<void | Response>;
 }

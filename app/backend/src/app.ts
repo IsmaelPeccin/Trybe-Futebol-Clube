@@ -1,13 +1,25 @@
 import * as express from 'express';
+import UserController from './controller/UserController';
+import { ILoginService, IUserController } from './interfaces';
+import errorMiddleware from './middlewares/errorMiddleware';
+import ValidateUser from './middlewares/validateUser';
+import UserService from './service/UserService';
 
 class App {
   public app: express.Express;
-  // ...
+
+  private _userService: ILoginService;
+
+  private _userController: IUserController;
 
   constructor() {
+    this._userService = new UserService();
+
+    this._userController = new UserController(this._userService);
+
     this.app = express();
+
     this.config();
-    // ...
   }
 
   private config():void {
@@ -19,10 +31,11 @@ class App {
     };
 
     this.app.use(accessControl);
-    // ...
+    this.app.use(express.json());
+    this.app.post('/login', ValidateUser.validateUser, this._userController.loginController);
+    this.app.use(errorMiddleware);
   }
 
-  // ...
   public start(PORT: string | number):void {
     this.app.listen(PORT, () => {
       console.log(`Server started on port ${PORT}`);
