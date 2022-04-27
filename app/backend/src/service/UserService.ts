@@ -28,4 +28,10 @@ export default class UserService {
       token: genToken,
     };
   }
+
+  public static validateLogin(token: string): string | null {
+    const result = AuthMiddleware.verifyToken(token);
+    if (result === undefined) return null;
+    return result.role;
+  }
 }

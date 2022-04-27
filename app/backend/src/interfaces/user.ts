@@ -19,8 +19,14 @@ export interface ILoginResponse {
 
 export interface ILoginService {
   login(userData: IUserInfo): Promise<ILoginResponse | boolean>;
+  validateLogin?(token: string): string;
 }
 
 export interface IUserController {
   loginController(req: Request, res: Response, next: NextFunction): Promise<void | Response>;
+  validateLoginController(
+    req: Request,
+    res: Response,
+    next: NextFunction)
+  : Promise<void | Response>;
 }
