@@ -33,6 +33,7 @@ class App {
     this.app.use(accessControl);
     this.app.use(express.json());
     this.app.post('/login', ValidateUser.validateUser, this._userController.loginController);
+    this.app.get('/login/validate', this._userController.validateLoginController);
     this.app.use(errorMiddleware);
   }
 

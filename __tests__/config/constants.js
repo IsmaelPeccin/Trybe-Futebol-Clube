@@ -8,7 +8,7 @@ module.exports = {
     backend: 3001,
     database: 3002,
   },
-  defaultDelay: 5000,
+  defaultDelay: 15000,
   defaultRounds: 30,
   puppeteerDefs: {
     headless: !(process.env.SHOW_BROWSER === "true"),
