@@ -5,7 +5,7 @@ export interface IUser {
   email: string;
 }
 
-export interface IUserValidate {
+export interface IUserInfo {
   email: string;
   password: string;
 }
@@ -15,7 +15,6 @@ export interface ILoginResponse {
   token: string;
 }
 
-export interface IResponse {
-  message: string;
-  code: number;
+export interface ILoginService {
+  login(userData: IUserInfo): Promise<ILoginResponse | boolean>;
 }

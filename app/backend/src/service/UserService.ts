@@ -1,5 +1,5 @@
 import { compare } from 'bcryptjs';
-import { IUserValidate, ILoginResponse, IResponse } from '../interfaces/user';
+import { IUserInfo, ILoginResponse } from '../interfaces/user';
 import User from '../database/models/UsersModel';
 import AuthMiddleware from '../middlewares/Auth';
 
@@ -10,16 +10,14 @@ export default class UserService {
     this._userModel = User;
   }
 
-  public async login(userData: IUserValidate): Promise<ILoginResponse | IResponse> {
+  public async login(userData: IUserInfo): Promise<ILoginResponse | boolean> {
     const response = await this._userModel.findOne({ where: { email: userData.email } });
 
     if (!response || !await compare(userData.password, response.password)) {
-      return {
-        message: 'Incorrect email or password',
-        code: 401,
-      };
+      return false;
     }
     const genToken = AuthMiddleware.generateToken(response);
+
     return {
       user: {
         id: response.id,
