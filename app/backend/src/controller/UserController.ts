@@ -10,7 +10,7 @@ export default class UserController {
     next: NextFunction,
   ): Promise<void | Response> => {
     try {
-      const userInfo: IUserInfo = req.body;
+      const userInfo = req.body as IUserInfo;
 
       const response = await this.userService.login(userInfo);
 
