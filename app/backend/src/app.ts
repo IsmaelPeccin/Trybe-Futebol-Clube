@@ -1,25 +1,43 @@
 import * as express from 'express';
+import TeamsController from './controller/TeamsController';
 import UserController from './controller/UserController';
-import { ILoginService, IUserController } from './interfaces';
+import { ILoginService, ITeamsController, ITeamsService, IUserController } from './interfaces';
 import errorMiddleware from './middlewares/errorMiddleware';
 import ValidateUser from './middlewares/validateUser';
+import TeamsService from './service/TeamsService';
 import UserService from './service/UserService';
 
 class App {
   public app: express.Express;
 
+  private _userController: IUserController;
+
   private _userService: ILoginService;
 
-  private _userController: IUserController;
+  private _teamsController: ITeamsController;
+
+  private _teamsService: ITeamsService;
 
   constructor() {
     this._userService = new UserService();
-
     this._userController = new UserController(this._userService);
 
-    this.app = express();
+    this._teamsService = new TeamsService();
+    this._teamsController = new TeamsController(this._teamsService);
 
+    this.app = express();
+    this.app.use(express.json());
     this.config();
+  }
+
+  private loginRouter():void {
+    this.app.post('/login', ValidateUser.validateUser, this._userController.loginController);
+
+    this.app.get('/login/validate', this._userController.validateLoginController);
+  }
+
+  private teamsRouter():void {
+    this.app.get('/teams', this._teamsController.listTeamsController);
   }
 
   private config():void {
@@ -31,9 +49,8 @@ class App {
     };
 
     this.app.use(accessControl);
-    this.app.use(express.json());
-    this.app.post('/login', ValidateUser.validateUser, this._userController.loginController);
-    this.app.get('/login/validate', this._userController.validateLoginController);
+    this.loginRouter();
+    this.teamsRouter();
     this.app.use(errorMiddleware);
   }
 
