@@ -38,6 +38,8 @@ class App {
 
   private teamsRouter():void {
     this.app.get('/teams', this._teamsController.listTeamsController);
+
+    this.app.get('/teams/:id', this._teamsController.findByIdController);
   }
 
   private config():void {
