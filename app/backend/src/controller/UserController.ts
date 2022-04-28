@@ -11,9 +11,9 @@ export default class UserController {
     next: NextFunction,
   ): Promise<void | Response> => {
     try {
-      const userInfo = req.body as IUserInfo;
+      const userData = req.body as IUserInfo;
 
-      const response = await this.userService.login(userInfo);
+      const response = await this.userService.login(userData);
 
       if (!response) {
         return res.status(401).json({ message: 'Incorrect email or password' });
