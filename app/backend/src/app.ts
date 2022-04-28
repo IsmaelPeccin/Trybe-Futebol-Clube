@@ -1,9 +1,16 @@
 import * as express from 'express';
+import MatchesController from './controller/MatchesController';
 import TeamsController from './controller/TeamsController';
 import UserController from './controller/UserController';
-import { ILoginService, ITeamsController, ITeamsService, IUserController } from './interfaces';
+import { ILoginService,
+  IMatchesController,
+  IMatchesService,
+  ITeamsController,
+  ITeamsService,
+  IUserController } from './interfaces';
 import errorMiddleware from './middlewares/errorMiddleware';
 import ValidateUser from './middlewares/validateUser';
+import MatchesService from './service/MatchesService';
 import TeamsService from './service/TeamsService';
 import UserService from './service/UserService';
 
@@ -18,12 +25,19 @@ class App {
 
   private _teamsService: ITeamsService;
 
+  private _matchesController: IMatchesController;
+
+  private _matchesService: IMatchesService;
+
   constructor() {
     this._userService = new UserService();
     this._userController = new UserController(this._userService);
 
     this._teamsService = new TeamsService();
     this._teamsController = new TeamsController(this._teamsService);
+
+    this._matchesService = new MatchesService();
+    this._matchesController = new MatchesController(this._matchesService);
 
     this.app = express();
     this.app.use(express.json());
@@ -42,6 +56,10 @@ class App {
     this.app.get('/teams/:id', this._teamsController.findByIdController);
   }
 
+  private matchesRouter():void {
+    this.app.get('/matches', this._matchesController.listMatchesController);
+  }
+
   private config():void {
     const accessControl: express.RequestHandler = (_req, res, next) => {
       res.header('Access-Control-Allow-Origin', '*');
@@ -53,6 +71,7 @@ class App {
     this.app.use(accessControl);
     this.loginRouter();
     this.teamsRouter();
+    this.matchesRouter();
     this.app.use(errorMiddleware);
   }
 
