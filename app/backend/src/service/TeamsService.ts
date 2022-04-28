@@ -13,4 +13,8 @@ export default class TeamsService {
       attributes: ['id', 'teamName'],
     });
   }
+
+  public async findById(id: number): Promise<ITeams | null> {
+    return this._teamsModel.findByPk(id);
+  }
 }
