@@ -17,4 +17,16 @@ export default class MatchesService {
       ],
     });
   }
+
+  public async findInProgress(query: boolean): Promise<IMatches[]> {
+    return this._matchesModel.findAll({
+      where: {
+        inProgress: query,
+      },
+      include: [
+        { model: Teams, as: 'teamHome', attributes: ['teamName'] },
+        { model: Teams, as: 'teamAway', attributes: ['teamName'] },
+      ],
+    });
+  }
 }

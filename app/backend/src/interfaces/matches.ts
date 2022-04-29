@@ -11,6 +11,7 @@ export interface IMatches {
 
 export interface IMatchesService {
   listMatches(): Promise<IMatches[]>;
+  findInProgress(query: boolean): Promise<IMatches[]>;
 }
 
 export interface IMatchesController {

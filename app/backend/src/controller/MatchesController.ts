@@ -5,15 +5,23 @@ export default class MatchesController {
   constructor(private matchesService: IMatchesService) {}
 
   listMatchesController = async (
-    _req: Request,
+    req: Request,
     res: Response,
     next: NextFunction,
   )
   : Promise<void | Response> => {
     try {
-      const response = await this.matchesService.listMatches();
+      const { inProgress } = req.query;
 
-      return res.status(200).json(response);
+      if (inProgress === 'true' || inProgress === 'false') {
+        const matches = await this.matchesService.findInProgress(
+          JSON.parse(inProgress),
+        );
+
+        return res.status(200).json(matches);
+      }
+      const allMatches = await this.matchesService.listMatches();
+      return res.status(200).json(allMatches);
     } catch (error) {
       next(error);
     }
