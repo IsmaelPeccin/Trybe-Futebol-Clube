@@ -13,10 +13,14 @@ export default class UserService {
   public async login(userData: IUserInfo): Promise<ILoginResponse | boolean> {
     const response = await this._userModel.findOne({ where: { email: userData.email } });
 
-    if (!response || !compareSync(userData.password, response.password)) {
-      return false;
-    }
-    const genToken = AuthMiddleware.generateToken(response);
+    if (!response || !compareSync(userData.password, response.password)) return false;
+
+    const payload = {
+      id: response.id,
+      username: response.username,
+      role: response.role,
+      email: response.email,
+    };
 
     return {
       user: {
@@ -25,7 +29,7 @@ export default class UserService {
         role: response.role,
         email: response.email,
       },
-      token: genToken,
+      token: AuthMiddleware.generateToken(payload),
     };
   }
 
