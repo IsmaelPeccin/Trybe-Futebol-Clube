@@ -40,7 +40,7 @@ export default class MatchesController {
 
       return res.status(201).json(match);
     } catch (error) {
-      next(error);
+      return res.status(404).json({ message: 'There is no team with such id!' });
     }
   };
 }
