@@ -16,9 +16,11 @@ export interface IMatchesService {
   listMatches(): Promise<IMatches[]>;
   findInProgress(query: boolean): Promise<IMatches[]>;
   createMatch(matchData: ICreateMatch): Promise<IMatches>;
+  finishMatch(id: number): Promise<boolean | undefined>;
 }
 
 export interface IMatchesController {
   listMatchesController(req: Request, res: Response, next: NextFunction): Promise<void | Response>;
   createMatchController(req: Request, res: Response, next: NextFunction): Promise<void | Response>;
+  finishMatch(req: Request, res: Response, next: NextFunction): Promise<void | Response>;
 }

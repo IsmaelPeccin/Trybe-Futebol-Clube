@@ -39,4 +39,24 @@ export default class MatchesService {
       inProgress: true,
     });
   }
+
+  public async finishMatch(id: number): Promise<boolean | undefined> {
+    const match = await this._matchesModel.findByPk(id);
+
+    if (!match) return false;
+
+    const updateMatch = await this._matchesModel.update(
+      {
+        inProgress: false,
+      },
+      {
+        where: {
+          id,
+        },
+      },
+    );
+    if (updateMatch) {
+      return true;
+    }
+  }
 }

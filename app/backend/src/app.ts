@@ -63,6 +63,11 @@ class App {
       '/matches',
       this._matchesController.createMatchController,
     );
+
+    this.app.patch(
+      '/matches/:id/finish',
+      this._matchesController.finishMatch,
+    );
   }
 
   private config():void {
