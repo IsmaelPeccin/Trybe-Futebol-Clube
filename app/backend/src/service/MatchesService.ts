@@ -1,5 +1,5 @@
 import Teams from '../database/models/TeamsModel';
-import { IMatches } from '../interfaces';
+import { ICreateMatch, IMatches } from '../interfaces';
 import Matches from '../database/models/MatchesModel';
 
 export default class MatchesService {
@@ -27,6 +27,16 @@ export default class MatchesService {
         { model: Teams, as: 'teamHome', attributes: ['teamName'] },
         { model: Teams, as: 'teamAway', attributes: ['teamName'] },
       ],
+    });
+  }
+
+  public async createMatch(matchData: ICreateMatch): Promise<IMatches> {
+    return this._matchesModel.create({
+      homeTeam: matchData.homeTeam,
+      awayTeam: matchData.awayTeam,
+      homeTeamGoals: matchData.homeTeamGoals,
+      awayTeamGoals: matchData.awayTeamGoals,
+      inProgress: true,
     });
   }
 }

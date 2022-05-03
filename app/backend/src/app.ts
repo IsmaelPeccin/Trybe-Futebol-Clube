@@ -58,6 +58,11 @@ class App {
 
   private matchesRouter():void {
     this.app.get('/matches', this._matchesController.listMatchesController);
+
+    this.app.post(
+      '/matches',
+      this._matchesController.createMatchController,
+    );
   }
 
   private config():void {
