@@ -1,5 +1,5 @@
 import Teams from '../database/models/TeamsModel';
-import { ICreateMatch, IMatches } from '../interfaces';
+import { ICreateMatch, IMatches, IUpdateResult } from '../interfaces';
 import Matches from '../database/models/MatchesModel';
 
 export default class MatchesService {
@@ -48,6 +48,27 @@ export default class MatchesService {
     const updateMatch = await this._matchesModel.update(
       {
         inProgress: false,
+      },
+      {
+        where: {
+          id,
+        },
+      },
+    );
+    if (updateMatch) {
+      return true;
+    }
+  }
+
+  public async updateResultMatch(id: number, result: IUpdateResult): Promise<boolean | undefined> {
+    const match = await this._matchesModel.findByPk(id);
+
+    if (!match) return false;
+
+    const updateMatch = await this._matchesModel.update(
+      {
+        homeTeamGoals: result.homeTeamGoals,
+        awayTeamGoals: result.awayTeamGoals,
       },
       {
         where: {

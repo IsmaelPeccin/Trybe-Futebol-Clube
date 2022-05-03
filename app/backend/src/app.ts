@@ -68,6 +68,11 @@ class App {
       '/matches/:id/finish',
       this._matchesController.finishMatch,
     );
+
+    this.app.patch(
+      '/matches/:id',
+      this._matchesController.updateResultMatch,
+    );
   }
 
   private config():void {
