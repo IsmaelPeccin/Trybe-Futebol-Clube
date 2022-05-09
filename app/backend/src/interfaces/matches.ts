@@ -1,7 +1,7 @@
 import { Response, Request, NextFunction } from 'express';
 
 export interface IMatches extends ICreateMatch {
-  id: number;
+  id?: number;
 }
 
 export interface ICreateMatch {
@@ -9,7 +9,34 @@ export interface ICreateMatch {
   homeTeamGoals: number;
   awayTeam: number;
   awayTeamGoals: number;
-  inProgress?: boolean;
+  inProgress: boolean;
+}
+
+export interface ITeamsMatches {
+  id: number;
+  homeTeam: number;
+  homeTeamGoals: number;
+  awayTeam: number;
+  awayTeamGoals: number;
+  inProgress: boolean;
+  teamHome: {
+    teamName: string;
+  },
+  teamAway: {
+    teamName: string;
+  }
+}
+
+export interface IMatchesHome {
+  id: any;
+  homeTeam: number;
+  homeTeamGoals: number;
+  awayTeam: number;
+  awayTeamGoals: number;
+  inProgress: boolean;
+  teamHome: {
+    teamName: string;
+  }
 }
 
 export interface IUpdateResult {
