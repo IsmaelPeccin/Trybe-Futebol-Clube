@@ -1,8 +1,9 @@
 import * as express from 'express';
+import LeaderboardController from './controller/LeaderboardController';
 import MatchesController from './controller/MatchesController';
 import TeamsController from './controller/TeamsController';
 import UserController from './controller/UserController';
-import { ILoginService,
+import { ILeaderboardController, ILeaderboardService, ILoginService,
   IMatchesController,
   IMatchesService,
   ITeamsController,
@@ -10,6 +11,7 @@ import { ILoginService,
   IUserController } from './interfaces';
 import errorMiddleware from './middlewares/errorMiddleware';
 import ValidateUser from './middlewares/validateUser';
+import LeaderboardService from './service/LeaderboardService';
 import MatchesService from './service/MatchesService';
 import TeamsService from './service/TeamsService';
 import UserService from './service/UserService';
@@ -29,6 +31,10 @@ class App {
 
   private _matchesService: IMatchesService;
 
+  private _leaderboardController: ILeaderboardController;
+
+  private _leaderboardService: ILeaderboardService;
+
   constructor() {
     this._userService = new UserService();
     this._userController = new UserController(this._userService);
@@ -38,6 +44,9 @@ class App {
 
     this._matchesService = new MatchesService();
     this._matchesController = new MatchesController(this._matchesService);
+
+    this._leaderboardService = new LeaderboardService();
+    this._leaderboardController = new LeaderboardController(this._leaderboardService);
 
     this.app = express();
     this.app.use(express.json());
@@ -75,6 +84,12 @@ class App {
     );
   }
 
+  private leaderboardRouter():void {
+    this.app.get('/leaderboard/home', this._leaderboardController.getLeaderboardHome);
+
+    this.app.get('/leaderboard/away', this._leaderboardController.getLeaderboardAway);
+  }
+
   private config():void {
     const accessControl: express.RequestHandler = (_req, res, next) => {
       res.header('Access-Control-Allow-Origin', '*');
@@ -87,6 +102,7 @@ class App {
     this.loginRouter();
     this.teamsRouter();
     this.matchesRouter();
+    this.leaderboardRouter();
     this.app.use(errorMiddleware);
   }
 
