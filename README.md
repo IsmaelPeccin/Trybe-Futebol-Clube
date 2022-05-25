@@ -7,7 +7,7 @@ O objeto do projeto era criar o backend para exibir informações sobre partidas
 
 A API foi desenvolvida com base na arquitetura MSC, utilizando POO e TypeScript e seguindo os princípios de SOLID.
 
-A API possuí os seguintes endpoints:
+O desenvolvimento da API seguiu os seguintes passos:
 
 - Autenticar usuários cadastrados através do login;
 - Listar clubes cadastrados;
