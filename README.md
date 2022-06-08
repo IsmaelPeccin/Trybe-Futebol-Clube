@@ -3,7 +3,7 @@
 ## Seja bem vindo(a) ao repositório do projeto Trybe Futebol Clube!
 
 Este projeto foi desenvolvido no período em que cursei o módulo de backend do curso de Desenvolvimento Web na Trybe.
-O objeto do projeto era criar o backend para exibir informações sobre partidas e classificações de futebol em um frontend previamente disponibilizado pela Trybe.
+O objetivo foi criar uma aplicação backend para exibir informações sobre partidas e classificações de futebol em um frontend previamente disponibilizado pela Trybe.
 
 A API foi desenvolvida com base na arquitetura MSC, utilizando POO e TypeScript e seguindo os princípios de SOLID.
 
