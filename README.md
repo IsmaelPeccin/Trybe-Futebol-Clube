@@ -32,7 +32,7 @@ O desenvolvimento da API seguiu os seguintes passos:
 - `JWT` para fazer a autenticação dos usuários logados;
 - `bcrypt` para fazer hashing e verificação das senhas armazenadas no banco de dados.
 
-## Instruções para roda o projeto localmente:
+## Instruções para rodar o projeto localmente:
 
 ***Para rodar a API localmente é necessário ter instalados e configurados o  [Docker](https://docs.docker.com/get-docker/) 
 e [Docker-Compose](https://docs.docker.com/compose/install/) em sua maquina.***
